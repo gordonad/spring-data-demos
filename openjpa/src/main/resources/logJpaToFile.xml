@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <appender name="jpalogfile"
+              class="ch.qos.logback.core.FileAppender">
+        <file>${user.home}/jpaApp.log</file>
+        <encoder>
+            <pattern>%.-1level|%-40.40logger{0}|%msg%n</pattern>
+        </encoder>
+        <append>false</append>
+    </appender>
+
+
+    <logger name="org.springframework.orm" additivity="false" level="debug">
+        <appender-ref ref="jpalogfile"/>
+    </logger>
+    <logger name="org.springframework.jdbc" additivity="false" level="debug">
+        <appender-ref ref="jpalogfile"/>
+    </logger>
+    <logger name="org.springframework.transaction" additivity="false" level="debug">
+        <appender-ref ref="jpalogfile"/>
+    </logger>
+
+    <logger name="org.h2" additivity="false" level="trace">
+        <appender-ref ref="jpalogfile"/>
+    </logger>
+    <logger name="org.apache.openjpa" additivity="false" level="trace">
+        <appender-ref ref="jpalogfile"/>
+    </logger>
+</included>

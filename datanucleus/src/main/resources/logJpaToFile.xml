@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <appender name="openjpafile"
+              class="ch.qos.logback.core.FileAppender">
+        <file>${user.home}/jpaApp.log</file>
+        <encoder>
+            <!--<pattern>%date %level|%msg%n</pattern>-->
+            <pattern>%date|%.-1level|%-30.30logger{0}|%msg%n</pattern>
+        </encoder>
+        <append>false</append>
+    </appender>
+
+
+    <logger name="org.springframework.orm.jpa.EntityManagerFactoryUtils" additivity="false" level="error">
+        <appender-ref ref="openjpafile"/>
+    </logger>
+    <logger name="org.springframework.orm" additivity="false" level="warn">
+        <appender-ref ref="openjpafile"/>
+    </logger>
+    <logger name="org.springframework.jdbc" additivity="false" level="warn">
+        <appender-ref ref="openjpafile"/>
+    </logger>
+    <logger name="org.springframework.transaction" additivity="false" level="warn">
+        <appender-ref ref="openjpafile"/>
+    </logger>
+
+    <logger name="org.h2" additivity="false" level="warn">
+        <appender-ref ref="openjpafile"/>
+    </logger>
+    <logger name="org.datanucleus" additivity="false" level="warn">
+        <appender-ref ref="openjpafile"/>
+    </logger>
+    <logger name="DataNucleus.JPA" additivity="false" level="warn">
+        <appender-ref ref="openjpafile"/>
+    </logger>
+</included>

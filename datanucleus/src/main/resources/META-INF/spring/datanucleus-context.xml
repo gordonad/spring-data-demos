@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd
+           http://www.springframework.org/schema/data/jpa
+           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+    <jpa:repositories base-package="com.gordondickens.orm.datanucleus.repository"/>
+
+    <context:property-placeholder location="classpath:/META-INF/spring/datanucleus-db.properties"/>
+
+    <context:component-scan base-package="com.gordondickens.orm.datanucleus"/>
+
+    <bean class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" id="dataSource">
+        <property name="driverClassName" value="${database.driverClassName}"/>
+        <property name="url" value="${database.url}"/>
+        <property name="username" value="${database.username}"/>
+        <property name="password" value="${database.password}"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="true"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
+        <property name="numTestsPerEvictionRun" value="3"/>
+        <property name="minEvictableIdleTimeMillis" value="1800000"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <tx:annotation-driven/>
+
+    <!-- NOTE: Do NOT use the "PersistenceUnit" property, it will override the "PackagesToScan" -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.gordondickens.orm.datanucleus.domain"/>
+        <property name="persistenceProviderClass" value="org.datanucleus.api.jpa.PersistenceProviderImpl"/>
+
+        <!-- ********************************** -->
+        <!-- This configuration 'jpaProperties' works -->
+        <!-- ********************************** -->
+        <!--
+        <property name="jpaProperties">
+            <util:properties>
+                <prop key="datanucleus.rdbms.datastoreAdapterClassName">
+                org.datanucleus.store.rdbms.adapter.H2Adapter
+                </prop>
+                <prop key="datanucleus.jpa.addClassTransformer">false</prop>
+                <prop key="datanucleus.autoCreateColumns">false</prop>
+                <prop key="datanucleus.autoCreateConstraints">false</prop>
+                <prop key="datanucleus.autoCreateSchema">true</prop>
+                <prop key="datanucleus.autoCreateTables">true</prop>
+                <prop key="datanucleus.rdbms.omitDatabaseMetaDataGetColumns">true</prop>
+                <prop key="datanucleus.storeManagerType">rdbms</prop>
+                <prop key="datanucleus.validateConstraints">false</prop>
+                <prop key="datanucleus.validateTables">false</prop>
+                <prop key="datanucleus.validation.mode">none</prop>
+            </util:properties>
+        </property>
+        -->
+
+        <!-- ********************************** -->
+        <!-- This configuration uses the Constants (where available) for the keys -->
+        <!-- DB Provider does NOT provide constants for all configuration keys - simply literal String values in some cases
+             Neither are they centrally located in a single class-->
+        <!-- ********************************** -->
+
+        <property name="jpaPropertyMap">
+            <map>
+                <entry key="datanucleus.rdbms.datastoreAdapterClassName"
+                       value="org.datanucleus.store.rdbms.adapter.H2Adapter"/>
+                <entry key="datanucleus.jpa.addClassTransformer" value="false"/>
+                <entry key="datanucleus.rdbms.omitDatabaseMetaDataGetColumns" value="true"/>
+                <entry value="false">
+                    <key>
+                        <util:constant static-field="org.datanucleus.PropertyNames.PROPERTY_AUTOCREATE_COLUMNS"/>
+                    </key>
+                </entry>
+                <entry value="false">
+                    <key>
+                        <util:constant static-field="org.datanucleus.PropertyNames.PROPERTY_AUTOCREATE_CONSTRAINTS"/>
+                    </key>
+                </entry>
+                <entry value="true">
+                    <key>
+                        <util:constant static-field="org.datanucleus.PropertyNames.PROPERTY_AUTOCREATE_SCHEMA"/>
+                    </key>
+                </entry>
+                <entry value="true">
+                    <key>
+                        <util:constant static-field="org.datanucleus.PropertyNames.PROPERTY_AUTOCREATE_TABLES"/>
+                    </key>
+                </entry>
+                <entry value="rdbms">
+                    <key>
+                        <util:constant static-field="org.datanucleus.PropertyNames.PROPERTY_STORE_MANAGER_TYPE"/>
+                    </key>
+                </entry>
+                <entry value="false">
+                    <key>
+                        <util:constant static-field="org.datanucleus.PropertyNames.PROPERTY_VALIDATE_CONSTRAINTS"/>
+                    </key>
+                </entry>
+                <entry value="false">
+                    <key>
+                        <util:constant static-field="org.datanucleus.PropertyNames.PROPERTY_VALIDATE_TABLES"/>
+                    </key>
+                </entry>
+                <entry value="none">
+                    <key>
+                        <util:constant static-field="org.datanucleus.PropertyNames.PROPERTY_VALIDATION_MODE"/>
+                    </key>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>
