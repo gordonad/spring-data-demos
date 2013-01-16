@@ -33,6 +33,6 @@ OpenJPA
 Demonstrates OpenJPA for Spring 3.x (Spring XML Config)
 
 
-[gordon@gordondickens.com](mailto:gordon@gordondickens.com)
-[twitter.com/gdickens](http://twitter.com/gdickens)
+* [gordon@gordondickens.com](mailto:gordon@gordondickens.com)
+* [twitter.com/gdickens](http://twitter.com/gdickens)
 
