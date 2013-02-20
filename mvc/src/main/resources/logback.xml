@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" scan="true" scanPeriod="30 seconds">
+
+    <property resource="logger.properties" />
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <appender name="logfile" class="ch.qos.logback.core.FileAppender">
+        <file>${user.dir}/myApplication.log</file>
+        <encoder>
+            <pattern>%date|%.-1level|%-30.30logger{0}|%msg%n</pattern>
+        </encoder>
+        <append>false</append>
+    </appender>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%.-1level|%-30.30logger{0}|%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.gordondickens" level="debug"/>
+    <logger name="org.springframework.web" level="trace"/>
+    <logger name="org.springframework.http" level="trace"/>
+
+    <root level="warn">
+        <appender-ref ref="console"/>
+        <appender-ref ref="logfile"/>
+    </root>
+</configuration>

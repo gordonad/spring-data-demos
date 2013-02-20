@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <appender name="springfile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/${logfile.spring}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${log.dir}/${logfile.spring}.%i.log.zip
+            </fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>6</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%date %level - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="org.springframework.aop" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.beans" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.cache" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.context" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.ejb" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.expression" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.format" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.http" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.jmx" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.jndi" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.mail" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.scheduling" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.scripting" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.stereotype" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.util" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.validation" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.web" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+    <logger name="org.springframework.webflow" level="debug">
+        <appender-ref ref="springfile"/>
+    </logger>
+
+</included>
+

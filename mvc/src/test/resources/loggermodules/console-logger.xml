@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%.-1level| %msg%n</pattern>
+        </encoder>
+    </appender>
+
+</included>

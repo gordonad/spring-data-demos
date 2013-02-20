@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <!-- To enable JMX Management -->
+    <jmxConfigurator/>
+
+</included>

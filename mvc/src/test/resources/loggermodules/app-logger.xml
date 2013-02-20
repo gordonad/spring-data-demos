@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+
+    <appender name="appfile"
+              class="ch.qos.logback.core.FileAppender">
+        <file>${log.dir}/${logfile.app}.log</file>
+        <append>false</append>
+
+        <encoder>
+            <Pattern>%d{HH:mm}|%.-1level|%-40.40logger{0}|%msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <!--<logger level="debug" additivity="false" name="com.gordondickensondickens">-->
+    <logger level="debug" name="com.gordondickens">
+        <appender-ref ref="appfile"/>
+    </logger>
+</included>

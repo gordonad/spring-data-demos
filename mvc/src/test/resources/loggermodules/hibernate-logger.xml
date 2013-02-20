@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <appender name="hibernatefile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/${logfile.hibernate}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${log.dir}/${logfile.hibernate}.%i.log.zip
+            </fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>6</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%date %level - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="org.springframework.orm" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.springframework.dao" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.springframework.data" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.springframework.jdbc" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.springframework.transaction" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+
+    <logger name="net.sf.ehcache" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+
+    <logger name="org.hibernate" level="info">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.hibernate.hql.ast" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.hibernate.cache" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.hibernate.ejb" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.hibernate.cfg" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.hibernate.jdbc" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.hibernate.pretty" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.hibernate.sql" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.hibernate.transaction" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.hibernate.type" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+    <logger name="org.hibernate.tool.hbm2ddl" level="debug">
+        <appender-ref ref="hibernatefile"/>
+    </logger>
+
+</included>
+
