@@ -1,6 +1,32 @@
-*.class
+# Gordons Git Ignore #
 
-# Package Files #
-*.jar
-*.war
+activemq-data
+amqstore
+build/
+*.class
+.classpath
+.clover
+derby-home
+derby.log
+desktop.ini
+.DS_Store
 *.ear
+.externalToolBuilders
+.gradle/
+.idea/
+*.iml
+*.ipr
+*.iws
+*.jar
+*.log
+.metadata
+out/
+.project
+.settings/
+.springBeans/
+surefire*
+*.swp
+target/
+testdb/
+*.war
+._*

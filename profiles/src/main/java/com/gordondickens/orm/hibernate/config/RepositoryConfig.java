@@ -40,7 +40,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan(basePackages = "com.gordondickens.orm.hibernate",
         excludeFilters = {@ComponentScan.Filter(Configuration.class)})
-@PropertySource("classpath:/META-INF/spring/hibernate-db.properties")
+@PropertySource("classpath:/META-INF/spring/h2database.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.gordondickens.orm.hibernate.repository")
 public class RepositoryConfig {

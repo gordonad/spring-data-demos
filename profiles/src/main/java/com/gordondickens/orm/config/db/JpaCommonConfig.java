@@ -1,25 +1,10 @@
-/*
- * Copyright 2012 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package com.gordondickens.app.infrastructure.config.db;
+package com.gordondickens.orm.config.db;
 
-import com.gordondickens.app.domain.Employee;
 import org.hibernate.dialect.Dialect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -33,34 +18,50 @@ import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * Common Settings for JPA
+ *  * <ul>
+ * <li>{@link Configuration} - defines this class as a Spring Configuration class</li>
+ * <li>{@link org.springframework.context.annotation.ComponentScan} - replaces &lt;context:component-scan/&gt;</li>
+ * <li>{@link PropertySource} - replaces &lt;context:property-placeholder/&gt;</li>
+ * <li>{@link org.springframework.transaction.annotation.EnableTransactionManagement} - replaces &lt;tx:annotation-driven/&gt;</li>
+ * <li>{@link org.springframework.data.jpa.repository.config.EnableJpaRepositories} - replaces Spring Data Jpa &lt;jpa:repositories/&gt;</li>
+ * <li>{@link Bean} - replaces  &lt;bean/&gt;</li>
+ * <li>{@link org.springframework.context.annotation.Scope} - replaces  &lt;bean scope=""/&gt;</li>
+ * </ul>
+ */
 @Configuration
-@PropertySource("classpath:/META-INF/spring/database.properties")
-public abstract class JpaPersistenceCommonConfig {
-    private static final Logger logger = LoggerFactory.getLogger(JpaPersistenceCommonConfig.class);
+@PropertySource("classpath:/META-INF/spring/app-config.properties")
+public abstract class JpaCommonConfig {
+    private static final Logger logger = LoggerFactory.getLogger(JpaCommonConfig.class);
     public static final String UNDEFINED = "**UNDEFINED**";
     public static final String CONNECTION_CHAR_SET = "hibernate.connection.charSet";
     public static final String VALIDATOR_APPLY_TO_DDL = "hibernate.validator.apply_to_ddl";
     public static final String VALIDATOR_AUTOREGISTER_LISTENERS = "hibernate.validator.autoregister_listeners";
 
-
     @Autowired
-    private Environment environment;
+    Environment environment;
 
+    @Value("#{ environment['entity.package'] }")
+    private String entityPackage = "com.gordondickens.orm.hibernate.domain";
 
-     /*
+    @Value("#{ environment['database.drop.url'] }")
+    private String databaseDropUrl;
+
+    // To be used in Tests for dropping the In Memory Derby DB (since its really on disk)
+    @Bean(name="derbyDropUrl")
+    public String derbyDropUrl() {
+        return databaseDropUrl;
+    }
+    
+    /*
      * ********************************
-     * PUBLIC  METHODS  ARE  @BEANS
-     * PUBLIC  METHODS  ARE  @BEANS
-     * PUBLIC  METHODS  ARE  @BEANS
-     * PUBLIC  METHODS  ARE  @BEANS
-     * PUBLIC  METHODS  ARE  @BEANS
      * PUBLIC  METHODS  ARE  @BEANS
      *
      * Method Name is the BEAN ID (without the parenthesis)
      * Return Type is the Bean type
      * ********************************
      */
-
     @Bean
     public abstract DataSource dataSource();
 
@@ -76,7 +77,9 @@ public abstract class JpaPersistenceCommonConfig {
         LocalContainerEntityManagerFactoryBean factory =
                 new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan(Employee.class.getPackage().getName());
+//        factory.setPersistenceXmlLocation("classpath:" + this.persistenceXmlFile);
+        logger.debug("\n\n****** Scanning '{}' Packages for Entities ******\n\n", entityPackage);
+        factory.setPackagesToScan(entityPackage);
         factory.setDataSource(dataSource());
         if (getJpaProperties() != null) {
             factory.setJpaProperties(getJpaProperties());
@@ -100,13 +103,19 @@ public abstract class JpaPersistenceCommonConfig {
      * ********************************
      * PROTECTED METHODS ARE NOT BEANS
      * PROTECTED METHODS ARE NOT BEANS
-     * PROTECTED METHODS ARE NOT BEANS
-     * PROTECTED METHODS ARE NOT BEANS
-     * PROTECTED METHODS ARE NOT BEANS
-     * PROTECTED METHODS ARE NOT BEANS
      * ********************************
      */
     protected abstract Class<? extends Dialect> getDatabaseDialect();
+
+    /**
+     * Override if using a different file for app-persistence.xml
+     * <p/>
+     */
+//    protected void setPersistenceXmlFile(final String filepathFromClasspathRoot) {
+//        if (StringUtils.trimToEmpty(filepathFromClasspathRoot) != null) {
+//            this.persistenceXmlFile = filepathFromClasspathRoot;
+//        }
+//    }
 
     /**
      * Override if configuring JPA Properties
@@ -117,7 +126,6 @@ public abstract class JpaPersistenceCommonConfig {
     protected Properties getJpaProperties() {
         return null;
     }
-
 
     public String getDatabaseName() {
         return environment.getProperty("database.name", UNDEFINED);
@@ -156,7 +164,7 @@ public abstract class JpaPersistenceCommonConfig {
     }
 
     public String getHbm2ddl() {
-        return environment.getProperty("hibernate.hbm2ddl.auto", Hbm2ddlType.NONE.toValue());
+        return environment.getProperty("database.hbm2ddl.auto", "none");
     }
 
     public String getHibernateCharSet() {
@@ -166,5 +174,4 @@ public abstract class JpaPersistenceCommonConfig {
     public String getDatabaseValidationQuery() {
         return environment.getProperty("database.validation.query", UNDEFINED);
     }
-
 }

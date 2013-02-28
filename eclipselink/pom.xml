@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.gordondickens.orm</groupId>
         <artifactId>orms</artifactId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
     </parent>
 
     <artifactId>EclipseLink</artifactId>
@@ -14,8 +14,6 @@
 
     <properties>
         <eclipselink.version>2.4.0</eclipselink.version>
-        <!--<eclipselink.version>2.3.2</eclipselink.version>-->
-        <eclipselink.persistence.version>2.1.0.v201201251030</eclipselink.persistence.version>
     </properties>
 
     <dependencies>
@@ -33,8 +31,8 @@
         </dependency>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
-            <artifactId>javax.persistence</artifactId>
-            <version>${eclipselink.persistence.version}</version>
+            <artifactId>org.eclipse.persistence.jpa</artifactId>
+            <version>${eclipselink.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -42,6 +40,7 @@
         </dependency>
     </dependencies>
 
+    <!-- See: http://wiki.eclipse.org/EclipseLink/Maven -->
     <repositories>
         <repository>
             <id>EclipseLink Repo</id>

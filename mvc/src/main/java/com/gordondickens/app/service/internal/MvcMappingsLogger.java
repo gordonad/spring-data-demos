@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import java.util.Map;
 
 /**
- * @author Gordon Dickens (dickeg01)
+ * @author Gordon Dickens
  */
 public class MvcMappingsLogger {
     private static final Logger logger = LoggerFactory.getLogger(MvcMappingsLogger.class);
