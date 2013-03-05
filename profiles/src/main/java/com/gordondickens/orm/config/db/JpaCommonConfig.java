@@ -45,15 +45,6 @@ public abstract class JpaCommonConfig {
     @Value("#{ environment['entity.package'] }")
     private String entityPackage = "com.gordondickens.orm.hibernate.domain";
 
-    @Value("#{ environment['database.drop.url'] }")
-    private String databaseDropUrl;
-
-    // To be used in Tests for dropping the In Memory Derby DB (since its really on disk)
-    @Bean(name="derbyDropUrl")
-    public String derbyDropUrl() {
-        return databaseDropUrl;
-    }
-    
     /*
      * ********************************
      * PUBLIC  METHODS  ARE  @BEANS

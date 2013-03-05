@@ -1,6 +1,5 @@
 package com.gordondickens.orm.hibernate.domain;
 
-import com.gordondickens.orm.config.db.JpaH2EmbeddedConfig;
 import com.gordondickens.orm.config.db.JpaHsqlEmbeddedConfig;
 import com.gordondickens.orm.config.support.DatabaseConfigProfile;
 import com.gordondickens.orm.hibernate.config.TestConfig;

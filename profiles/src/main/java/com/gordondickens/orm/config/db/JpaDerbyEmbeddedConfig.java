@@ -6,10 +6,13 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.dialect.DerbyTenSevenDialect;
 import org.hibernate.dialect.Dialect;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
@@ -38,6 +41,18 @@ import static org.hibernate.ejb.AvailableSettings.NAMING_STRATEGY;
 @PropertySource("classpath:/META-INF/spring/derby-embedded.properties")
 public class JpaDerbyEmbeddedConfig extends JpaCommonConfig {
 
+    @Autowired
+    Environment environment;
+
+    @Value("#{ environment['database.drop.url'] }")
+    private String databaseDropUrl;
+
+    // To be used in Tests for dropping the In Memory Derby DB (since its really on disk)
+    @Bean(name = "derbyDropUrl")
+    public String derbyDropUrl() {
+        return databaseDropUrl;
+    }
+
     @Override
     @Bean(destroyMethod = "close")
     public DataSource dataSource() {
@@ -55,7 +70,7 @@ public class JpaDerbyEmbeddedConfig extends JpaCommonConfig {
         dataSource.setMinEvictableIdleTimeMillis(1800000);
         return dataSource;
     }
-    
+
     /**
      * Source {@link org.hibernate.cfg.Environment}
      *
