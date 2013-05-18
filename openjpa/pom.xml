@@ -14,7 +14,7 @@
 
     <properties>
         <commons.lang2.version>2.6</commons.lang2.version>
-        <openjpa.version>2.2.1</openjpa.version>
+        <openjpa.version>2.2.2</openjpa.version>
     </properties>
 
     <dependencies>

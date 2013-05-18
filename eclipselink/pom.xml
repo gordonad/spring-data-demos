@@ -13,7 +13,7 @@
     <name>ORM | EclipseLink</name>
 
     <properties>
-        <eclipselink.version>2.4.0</eclipselink.version>
+        <eclipselink.version>2.5.0</eclipselink.version>
     </properties>
 
     <dependencies>
