@@ -5,7 +5,7 @@ import com.gordondickens.orm.config.support.Hbm2ddlType;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.cfg.ImprovedNamingStrategy;
 import org.hibernate.dialect.Dialect;
-import org.hibernate.dialect.HSQLDialect;
+import org.hibernate.dialect.H2Dialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -83,7 +83,7 @@ public class JpaH2EmbeddedConfig extends JpaCommonConfig {
 
     @Override
     protected Class<? extends Dialect> getDatabaseDialect() {
-        return HSQLDialect.class;
+        return H2Dialect.class;
     }
 
 
